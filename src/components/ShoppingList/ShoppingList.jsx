@@ -2,16 +2,24 @@ import React from "react";
 import { Wrapper, Title, Array } from "./ShoppingList.styles";
 import Checkbox from "../../shared/Checkbox";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectSelectedProducts,
   selectAllProducts,
 } from "../../store/Products/Products.selector";
 
-function ShoppingList({ title, displayOnlySelected, onToggle }) {
+import { toggleProduct } from "../../store/Products/Products.actions";
+
+function ShoppingList({ title, displayOnlySelected }) {
   const products = useSelector(
     displayOnlySelected ? selectSelectedProducts : selectAllProducts
   );
+
+  const dispatch = useDispatch();
+
+  function handleToggle(id) {
+    dispatch(toggleProduct(id));
+  }
 
   return (
     <Wrapper>
@@ -22,7 +30,7 @@ function ShoppingList({ title, displayOnlySelected, onToggle }) {
             key={product.id}
             value={product.checked}
             title={product.name}
-            onClick={() => onToggle(product.id, product.checked, product.name)}
+            onClick={() => handleToggle(product.id)}
           />
         ))}
       </Array>

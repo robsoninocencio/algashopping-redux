@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Wrapper, Container } from "./App.styles";
 
 import LineChart from "../../shared/LineChart";
@@ -15,7 +15,6 @@ import {
   selectSelectedProducts,
   selectSelectedProductsTotalPrice,
 } from "../../store/Products/Products.selector";
-import { toggleProduct } from "../../store/Products/Products.actions";
 
 function App() {
   const colors = ["#62CBC6", "#00ABAD", "#00858C", "#006073", "#004D61"];
@@ -23,29 +22,14 @@ function App() {
   const selectedProducts = useSelector(selectSelectedProducts);
   const totalPrice = useSelector(selectSelectedProductsTotalPrice);
 
-  const dispatch = useDispatch();
-
-  function handleToggle(id) {
-    dispatch(toggleProduct(id));
-  }
-
   return (
     <Wrapper>
       <Container>
         <AppHeader />
         <AppContainer
-          left={
-            <ShoppingList
-              title="Produtos disponíveis"
-              onToggle={handleToggle}
-            />
-          }
+          left={<ShoppingList title="Produtos disponíveis" />}
           middle={
-            <ShoppingList
-              title="Sua lista de compras"
-              displayOnlySelected
-              onToggle={handleToggle}
-            />
+            <ShoppingList title="Sua lista de compras" displayOnlySelected />
           }
           right={
             <div>
